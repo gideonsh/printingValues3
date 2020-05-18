@@ -138,6 +138,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\printingValues\Header Files\Algorithm3.h" />
+    <ClInclude Include="..\..\printingValues\Header Files\BST.h" />
+    <ClInclude Include="..\..\printingValues\Header Files\List.h" />
+    <ClInclude Include="..\..\printingValues\Header Files\ListNode.h" />
+    <ClInclude Include="..\..\printingValues\Header Files\Person.h" />
+    <ClInclude Include="..\..\printingValues\Header Files\TreeNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\printingValues\Source Files\Algorithm3.cpp" />
+    <ClCompile Include="..\..\printingValues\Source Files\BST.cpp" />
+    <ClCompile Include="..\..\printingValues\Source Files\List.cpp" />
+    <ClCompile Include="..\..\printingValues\Source Files\ListNode.cpp" />
+    <ClCompile Include="..\..\printingValues\Source Files\Person.cpp" />
+    <ClCompile Include="..\..\printingValues\Source Files\Source.cpp" />
+    <ClCompile Include="..\..\printingValues\Source Files\TreeNode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
