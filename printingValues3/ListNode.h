@@ -2,7 +2,7 @@
 
 #include<iostream>
 using namespace std;
-#include "Person.h"
+#include "Student.h"
 
 class ListNode
 {
@@ -10,7 +10,7 @@ private:
 	// person cell;
 
 public:
-	Person m_Person;
+	Student m_Student;
 
 	ListNode* next;
 	ListNode* prev;

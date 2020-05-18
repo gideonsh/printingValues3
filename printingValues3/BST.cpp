@@ -13,7 +13,7 @@ void BST::insertNode(TreeNode* p_NewNode)
 	}
 	else
 	{
-		if (findeNode(p_NewNode->m_Data.m_Id, currentNode))
+		if (findeNode(p_NewNode->m_Data.getId(), currentNode))
 		{
 			cout << "Node Id already exist!\n";
 		}
@@ -21,7 +21,7 @@ void BST::insertNode(TreeNode* p_NewNode)
 		{
 			if (currentNode != nullptr)
 			{
-				if (currentNode->m_Data.m_Id > p_NewNode->m_Data.m_Id)
+				if (currentNode->m_Data.getId() > p_NewNode->m_Data.getId())
 				{
 					currentNode->m_Left = p_NewNode;
 				}
@@ -46,7 +46,7 @@ bool BST::findeNode(int p_Id, TreeNode*& p_NodeToChange)
 	if (m_Head != nullptr)
 	{
 		p_NodeToChange = findeNodeReq(p_Id, m_Head);
-		if (p_NodeToChange->m_Data.m_Id == p_Id)
+		if (p_NodeToChange->m_Data.getId() == p_Id)
 		{
 			return true;
 		}
@@ -64,13 +64,13 @@ bool BST::findeNode(int p_Id, TreeNode*& p_NodeToChange)
 
 TreeNode* BST::findeNodeReq(int p_Id, TreeNode* p_Node)
 {
-	if (p_Node->m_Data.m_Id == p_Id)
+	if (p_Node->m_Data.getId() == p_Id)
 	{
 		return p_Node;
 	}
 	else
 	{
-		if (p_Node->m_Data.m_Id > p_Id)
+		if (p_Node->m_Data.getId() > p_Id)
 		{
 			if (p_Node->m_Left != nullptr)
 			{

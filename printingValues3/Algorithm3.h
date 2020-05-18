@@ -5,7 +5,7 @@ using namespace std;
 class Algorithm3
 {
 private:
-	int cmpCount;
+	int m_cmpCount;
 
 public:
 	Algorithm3(int* arr, int n, int k);

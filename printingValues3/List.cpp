@@ -12,15 +12,15 @@ void List::makeEmptyList()
 void List::insertNode(ListNode* p_NewNode)
 {
 	ListNode* currentNode;
-	if (!findNode(p_NewNode->m_Person.m_Id, currentNode))
+	if (!findNode(p_NewNode->m_Student.getId(), currentNode))
 	{
-		if (currentNode->m_Person.m_Id == m_Head->m_Person.m_Id)
+		if (currentNode->m_Student.getId() == m_Head->m_Student.getId())
 		{
 			m_Head->prev = p_NewNode;
 			p_NewNode = m_Head;
 			m_Head = p_NewNode;
 		}
-		else if (currentNode->m_Person.m_Id == m_Tail->m_Person.m_Id)
+		else if (currentNode->m_Student.getId() == m_Tail->m_Student.getId())
 		{
 			m_Tail->next = p_NewNode;
 			p_NewNode->prev = m_Tail;
@@ -111,7 +111,7 @@ bool List::findNode(int p_Id, ListNode*& p_NodeToChange)
 {
 	ListNode* currentNode = m_Head;
 
-	if (currentNode->m_Person.m_Id > p_Id)
+	if (currentNode->m_Student.getId() > p_Id)
 	{
 		p_NodeToChange = currentNode;
 		return false;
@@ -119,19 +119,19 @@ bool List::findNode(int p_Id, ListNode*& p_NodeToChange)
 
 	while (currentNode->next != nullptr)
 	{
-		if (currentNode->m_Person.m_Id == p_Id)
+		if (currentNode->m_Student.getId() == p_Id)
 		{
 			p_NodeToChange = currentNode;
 			return true;
 		}
-		if (currentNode->m_Person.m_Id < p_Id && currentNode->next->m_Person.m_Id > p_Id)
+		if (currentNode->m_Student.getId() < p_Id && currentNode->next->m_Student.getId() > p_Id)
 		{
 			p_NodeToChange = currentNode;
 			return false;
 		}
 		currentNode = currentNode->next;
 	}
-	if (currentNode->m_Person.m_Id == p_Id)
+	if (currentNode->m_Student.getId() == p_Id)
 	{
 		p_NodeToChange = currentNode;
 		return true;

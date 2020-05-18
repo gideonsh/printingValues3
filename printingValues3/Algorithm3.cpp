@@ -2,7 +2,7 @@
 
 Algorithm3::Algorithm3(int* arr, int n, int k)
 {
-	cmpCount = 0;
+	m_cmpCount = 0;
 	QuickSort(arr, 0, n-1);
 	printTillK(arr, n, k);
 }
@@ -54,7 +54,7 @@ int Algorithm3::Partition(int* arr, int left, int right)
 				indexToCompare++;
 			}
 		}
-		cmpCount++;
+		m_cmpCount++;
 	}
 	return pivotIndex;
 }
@@ -72,12 +72,12 @@ void Algorithm3::printTillK(int* arr, int n, int k)
 		{
 			cout << arr[i] << " ";
 		}
-		cmpCount++;
+		m_cmpCount++;
 	}
 	cout << endl;
 }
 
 int Algorithm3::getComparesCount()
 {
-	return cmpCount;
+	return m_cmpCount;
 }

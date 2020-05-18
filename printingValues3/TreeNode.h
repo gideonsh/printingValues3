@@ -3,14 +3,14 @@
 #include<iostream>
 using namespace std;
 
-#include "Person.h"
+#include "Student.h"
 
 class TreeNode
 {
 private: 
 
 public:
-	Person m_Data;
+	Student m_Data;
 	TreeNode* m_Left;
 	TreeNode* m_Right;
 

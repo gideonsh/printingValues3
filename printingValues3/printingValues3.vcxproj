@@ -23,7 +23,7 @@
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="ListNode.cpp" />
-    <ClCompile Include="Person.cpp" />
+    <ClCompile Include="Student.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TreeNode.cpp" />
   </ItemGroup>
@@ -32,8 +32,9 @@
     <ClInclude Include="BST.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="ListNode.h" />
-    <ClInclude Include="Person.h" />
+    <ClInclude Include="Student.h" />
     <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
