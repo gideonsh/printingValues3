@@ -11,8 +11,7 @@ private:
 	ListNode* m_Tail;
 
 public:
-
-	List() = defalut;
+	List() = default;
 	void makeEmptyList();
 	void insertToEmpty(ListNode* p_NewNode);
 	void insertToHead(ListNode* p_NewNode);

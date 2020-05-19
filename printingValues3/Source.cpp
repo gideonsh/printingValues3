@@ -16,6 +16,8 @@ int main()
 //	int cmps_BSTPrint = BSTPrint(arr, n, k);
 	int cmps_PrintBySort = PrintBySort(students, n, k);
 
+	delete[] students;
+
 //	cout << "NaivePrint: " << cmps_NaivePrint << " comparisons" << endl;
 //	cout << "BSTPrint: " << cmps_BSTPrint << " comparisons" << endl;
 	cout << "PrintBySort: " << cmps_PrintBySort << " comparisons" << endl;
