@@ -1,10 +1,30 @@
 
 #include "List.h"
 
-
+List::List()
+{
+	m_Head = nullptr;
+	m_Tail = nullptr;
+}
 
 void List::makeEmptyList()
 {
+	if (m_Head == nullptr)
+	{
+		return;
+	}
+	else
+	{
+		ListNode* current = m_Head;
+		ListNode* prev = nullptr;
+		while (current != nullptr)
+		{
+			prev = current;
+			current = current->next;
+			delete prev->m_Student;
+			delete prev;
+		}
+	}
 	m_Head = nullptr;
 	m_Tail = nullptr;
 }
