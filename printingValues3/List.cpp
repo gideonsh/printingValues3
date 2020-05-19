@@ -9,18 +9,52 @@ void List::makeEmptyList()
 	m_Tail = nullptr;
 }
 
-void List::insertNode(ListNode* p_NewNode)
+void List::insertToEmpty(ListNode* p_NewNode)
 {
-	ListNode* currentNode;
-	if (!findNode(p_NewNode->m_Student.getId(), currentNode))
+	m_Head = p_NewNode;
+	m_Tail = p_NewNode;
+}
+
+void List::insertToHead(ListNode* p_NewNode)
+{
+	p_NewNode->next = m_Head;
+	m_Head->prev = p_NewNode;
+	m_Head = p_NewNode;
+}
+
+void List::insertToInner(ListNode* p_NewNode, ListNode* p_PrevNode)
+{
+	p_NewNode->next = p_PrevNode->next;
+	p_NewNode->prev = p_PrevNode;
+	p_PrevNode->next->prev = p_NewNode;
+	p_PrevNode->next = p_NewNode;
+}
+
+void List::insertToTail(ListNode* p_NewNode)
+{
+	m_Tail->next = p_NewNode;
+	p_NewNode->prev = m_Tail;
+	m_Tail = p_NewNode;
+}
+
+void List::insert(ListNode* p_NewNode)
+{
+	ListNode* current;
+	if (m_Head == m_Tail)
 	{
-		if (currentNode->m_Student.getId() == m_Head->m_Student.getId())
+		insertToEmpty(p_NewNode);
+		return;
+	}
+	bool existNode = findNode(p_NewNode->m_Student->getId, current);
+	if (!existNode)
+	{
+		if (current == m_Head)
 		{
 			m_Head->prev = p_NewNode;
-			p_NewNode = m_Head;
+			p_NewNode->next = m_Head;
 			m_Head = p_NewNode;
 		}
-		else if (currentNode->m_Student.getId() == m_Tail->m_Student.getId())
+		else if (current == m_Tail)
 		{
 			m_Tail->next = p_NewNode;
 			p_NewNode->prev = m_Tail;
@@ -28,77 +62,76 @@ void List::insertNode(ListNode* p_NewNode)
 		}
 		else
 		{
-			p_NewNode->next = currentNode->next;
-			currentNode = p_NewNode;
-			p_NewNode->prev = currentNode;
-			p_NewNode->next->prev = p_NewNode;
+			insertToInner(p_NewNode, current);
 		}
+	}
+	else
+	{
+		cout << "student already exist\n";
 	}
 }
 
-void List::deleteNode(int p_Id)
+void List::deleteSingleNode()
 {
-	//////////option one////////////
-	//if (m_Head != nullptr)
-	//{
-	//	ListNode* currentNode = m_Head;
-	//	ListNode* nextNode = m_Head->next;
-	//	if (currentNode.person.m_Id == p_Id)
-	//	{
-	//		m_Head = nextNode;
-	//		//delete person
-	//		delete currentNode;
-	//	}
-	//	while (nextNode != nullptr)
-	//	{
-	//		if (currentNode.person.m_Id == p_Id)
-	//		{
-	//			//deleter person func
-	//			currentNode = currentNode->prev;
-	//			delete nextNode->prev;
-	//			nextNode->prev = currentNode;
-	//		}
-	//		currentNode = nextNode;
-	//		nextNode = nextNode->next;
-	//	}
-	//	if (currentNode.person.m_Id == p_Id)
-	//	{
-	//		m_Tail = currentNode->prev;
-	//		currentNode->prev->next = nullptr;
-	//		//delete person
-	//		delete currentNode;
-	//	}
-	//}
-	///// end option one/////////////
+	ListNode* current = m_Head;
+	m_Head = nullptr;
+	m_Tail = nullptr;
+	delete current->m_Student;
+	delete current;
+}
 
-	/////option two///////////
-	ListNode* currentNode;
-	ListNode* nextNode;
-	if (findNode(p_Id, currentNode))
+void List::deleteNode(Student* p_Student)
+{
+	ListNode* current;
+	bool existNode = findNode(p_Student->getId, current);
+	if (existNode)
 	{
-		if (currentNode->prev == nullptr)
+		if (current == m_Head && current->next == nullptr)
 		{
-			m_Head = currentNode->next;
-			//delete m_Person
-			delete currentNode;
+			deleteSingleNode();
 		}
-		else if (currentNode->next == nullptr)
+		else if (current == m_Head)
 		{
-			m_Tail = currentNode->prev;
-			//delete person
-			delete currentNode;
+			deleteFromHead();
+		}
+		else if (current == m_Tail)
+		{
+			deleteFromTail();
 		}
 		else
 		{
-			nextNode = currentNode->next;
-			currentNode = currentNode->prev;
-			//delete m_Person
-			delete nextNode->prev;
-			nextNode->prev = currentNode;
+			deleteFromInner(current);
 		}
 	}
-	////end option two////////
 }
+
+void List::deleteFromHead()
+{
+	ListNode* current = m_Head;
+	m_Head = m_Head->next;
+	m_Head->prev = nullptr;
+	delete current->m_Student;
+	delete current;
+}
+
+void List::deleteFromTail()
+{
+	ListNode* current = m_Tail;
+	m_Tail = m_Tail->prev;
+	m_Tail->next = nullptr;
+	delete current->m_Student;
+	delete current;
+}
+
+void List::deleteFromInner(ListNode* p_NodeToDelete)
+{
+	ListNode* prev = p_NodeToDelete->prev;
+	prev->next = p_NodeToDelete->next;
+	p_NodeToDelete->next = prev;
+	delete p_NodeToDelete->m_Student;
+	delete p_NodeToDelete;
+}
+
 
 bool List::isEmpty()
 {
@@ -111,7 +144,7 @@ bool List::findNode(int p_Id, ListNode*& p_NodeToChange)
 {
 	ListNode* currentNode = m_Head;
 
-	if (currentNode->m_Student.getId() > p_Id)
+	if (currentNode->m_Student->getId() > p_Id)
 	{
 		p_NodeToChange = currentNode;
 		return false;
@@ -119,19 +152,19 @@ bool List::findNode(int p_Id, ListNode*& p_NodeToChange)
 
 	while (currentNode->next != nullptr)
 	{
-		if (currentNode->m_Student.getId() == p_Id)
+		if (currentNode->m_Student->getId() == p_Id)
 		{
 			p_NodeToChange = currentNode;
 			return true;
 		}
-		if (currentNode->m_Student.getId() < p_Id && currentNode->next->m_Student.getId() > p_Id)
+		if (currentNode->m_Student->getId() < p_Id && currentNode->next->m_Student->getId() > p_Id)
 		{
 			p_NodeToChange = currentNode;
 			return false;
 		}
 		currentNode = currentNode->next;
 	}
-	if (currentNode->m_Student.getId() == p_Id)
+	if (currentNode->m_Student->getId() == p_Id)
 	{
 		p_NodeToChange = currentNode;
 		return true;

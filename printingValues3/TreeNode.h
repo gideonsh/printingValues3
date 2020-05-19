@@ -10,11 +10,12 @@ class TreeNode
 private: 
 
 public:
-	Student m_Data;
+	Student* m_Data;
 	TreeNode* m_Left;
 	TreeNode* m_Right;
 
-	TreeNode* makeNode(int p_Id, char* p_Name);
+	TreeNode* makeTreeNode(Student p_Student);
+	TreeNode* findTreeNode();
 
 
 };

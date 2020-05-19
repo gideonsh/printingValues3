@@ -7,16 +7,16 @@ using namespace std;
 class ListNode
 {
 private:
-	// person cell;
+	
 
 public:
-	Student m_Student;
-
+	Student* m_Student;
 	ListNode* next;
 	ListNode* prev;
 
-
-	ListNode* makeListNode(int p_Id, char* p_Name);
+	ListNode() = delete;
+	ListNode(Student* p_Student);
+	ListNode* makeListNode(Student* p_Student);
 	void deleteListNode(int p_Id);
 
 };
