@@ -9,11 +9,7 @@ List::List()
 
 void List::makeEmptyList()
 {
-	if (m_Head == nullptr)
-	{
-		return;
-	}
-	else
+	if (m_Head != nullptr)
 	{
 		ListNode* current = m_Head;
 		ListNode* prev = nullptr;

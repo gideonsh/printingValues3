@@ -19,7 +19,7 @@ public:
 		n = stoi(input);
 
 		try {
-			students = new Student[n];
+			students = (Student*)malloc(n * sizeof(Student));
 			for (int i = 0; i < n; i++)
 			{
 				cin >> id;
@@ -53,4 +53,6 @@ public:
 		}
 		return true;
 	}
+
+
 };

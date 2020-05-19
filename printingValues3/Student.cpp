@@ -6,6 +6,16 @@ Student::Student(string name, string id)
 	m_Id = stoi(id);
 }
 
+Student::Student(const Student& other)
+{
+	*this = other;
+}
+
+Student::Student(Student&& other)
+{
+	*this = other;
+}
+
 void Student::setName(string name)
 {
 	try 

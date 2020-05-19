@@ -13,6 +13,8 @@ private:
 public:
 	Student() = default;
 	Student(string name, string id);
+	Student(const Student& other);
+	Student(Student&& other);
 	void setName(string name);
 	void setId(string id);
 	string getName();
@@ -45,6 +47,7 @@ public:
 
 		return true;
 	}
+	
 	static bool isIdValid(string id)
 	{
 		if (id == "")
@@ -56,5 +59,22 @@ public:
 				throw invalid_argument("ID includes not numeric characters.");
 		}
 		return true;
+	}
+
+	const Student& operator=(const Student& other)
+	{
+		if (this != &other)
+		{
+			m_Id = other.m_Id;
+			m_Name = other.m_Name;
+		}
+		return *this;
+	}
+
+	static void swap(Student* a, Student* b)
+	{
+		Student temp = *a;
+		*a = *b;
+		*b = temp;
 	}
 };

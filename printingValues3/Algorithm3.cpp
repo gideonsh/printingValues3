@@ -1,13 +1,13 @@
 #include "Algorithm3.h"
 
-Algorithm3::Algorithm3(int* arr, int n, int k)
+Algorithm3::Algorithm3(Student* arr, int n, int k)
 {
 	m_cmpCount = 0;
 	QuickSort(arr, 0, n-1);
 	printTillK(arr, n, k);
 }
 
-void Algorithm3::QuickSort(int* arr, int left, int right)
+void Algorithm3::QuickSort(Student* arr, int left, int right)
 {
 	int pivot;
 
@@ -19,7 +19,7 @@ void Algorithm3::QuickSort(int* arr, int left, int right)
 	}
 }
 
-int Algorithm3::Partition(int* arr, int left, int right)
+int Algorithm3::Partition(Student* arr, int left, int right)
 {
 	int pivotIndex = left;
 	int indexToCompare = right;
@@ -28,9 +28,9 @@ int Algorithm3::Partition(int* arr, int left, int right)
 	{
 		if (pivotIndex < indexToCompare)
 		{
-			if (arr[pivotIndex] > arr[indexToCompare])
+			if (arr[pivotIndex].getId() > arr[indexToCompare].getId())
 			{
-				swap(arr + pivotIndex, arr + indexToCompare);
+				Student::swap(arr + pivotIndex, arr + indexToCompare);
 				int temp = indexToCompare;
 				indexToCompare = pivotIndex + 1;
 				pivotIndex = temp;
@@ -42,9 +42,9 @@ int Algorithm3::Partition(int* arr, int left, int right)
 		}
 		else if (pivotIndex > indexToCompare)
 		{
-			if (arr[pivotIndex] < arr[indexToCompare])
+			if (arr[pivotIndex].getId() < arr[indexToCompare].getId())
 			{
-				swap(arr + pivotIndex, arr + indexToCompare);
+				Student::swap(arr + pivotIndex, arr + indexToCompare);
 				int temp = indexToCompare;
 				indexToCompare = pivotIndex - 1;
 				pivotIndex = temp;
@@ -59,18 +59,18 @@ int Algorithm3::Partition(int* arr, int left, int right)
 	return pivotIndex;
 }
 
-void Algorithm3::printTillK(int* arr, int n, int k)
+void Algorithm3::printTillK(Student* arr, int n, int k)
 {
 	bool stop = false;
 	for (int i = 0; i < n && stop == false; i++)
 	{
-		if (arr[i] >= k)
+		if (arr[i].getId() >= k)
 		{
 			stop = true;
 		}
 		else
 		{
-			cout << arr[i] << " ";
+			cout << arr[i].getId() << " ";
 		}
 		m_cmpCount++;
 	}

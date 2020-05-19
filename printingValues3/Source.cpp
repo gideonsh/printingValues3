@@ -3,7 +3,7 @@
 #include "Student.h"
 
 int NaivePrint(Student arr[], int n, int k);
-int PrintBySort(int arr[], int n, int k);
+int PrintBySort(Student arr[], int n, int k);
 
 int main()
 {
@@ -14,11 +14,11 @@ int main()
 
 //	int cmps_NaivePrint = NaivePrint(students, n, k);
 //	int cmps_BSTPrint = BSTPrint(arr, n, k);
-//	int cmps_PrintBySort = PrintBySort(arr, n, k);
+	int cmps_PrintBySort = PrintBySort(students, n, k);
 
 //	cout << "NaivePrint: " << cmps_NaivePrint << " comparisons" << endl;
 //	cout << "BSTPrint: " << cmps_BSTPrint << " comparisons" << endl;
-//	cout << "PrintBySort: " << cmps_PrintBySort << " comparisons" << endl;
+	cout << "PrintBySort: " << cmps_PrintBySort << " comparisons" << endl;
 }
 
 //int NaivePrint(Student arr[], int n, int k)
@@ -26,7 +26,7 @@ int main()
 //	
 //}
 
-int PrintBySort(int arr[], int n, int k)
+int PrintBySort(Student arr[], int n, int k)
 {
 	cout << "\nIn PrintBySort Function:" << endl;
 	int amount;
