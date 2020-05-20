@@ -12,7 +12,7 @@ public:
 	{
 		string input, id, name;
 
-		getline(cin, input);
+		cin >> input;
 		if (isValidInputNumber(input) == false)
 			throw invalid_argument("Not number entered for n value.");
 
@@ -42,6 +42,7 @@ public:
 		getline(cin, input);
 		if (isValidInputNumber(input) == false)
 			throw invalid_argument("Not number entered for k value.");
+		k = stoi(input);
 	}
 
 	static bool isValidInputNumber(string input)

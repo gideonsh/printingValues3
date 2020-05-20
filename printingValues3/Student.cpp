@@ -58,5 +58,5 @@ int Student::getId()
 
 void Student::printStudentInfo()
 {
-	cout << "Student name: " << m_Name << " ID: " << m_Id << endl;
+	cout << m_Id << " " << m_Name << endl;
 }

@@ -70,7 +70,7 @@ void Algorithm3::printTillK(Student* arr, int n, int k)
 		}
 		else
 		{
-			cout << arr[i].getId() << " ";
+			arr[i].printStudentInfo();
 		}
 		m_cmpCount++;
 	}

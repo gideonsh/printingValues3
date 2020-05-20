@@ -9,24 +9,27 @@ class List
 private:
 	ListNode* m_Head;
 	ListNode* m_Tail;
+	int m_cmpCount;
 
 public:
-	List() = default;
+	List();
+	~List();
 	void makeEmptyList();
-	void insertToEmpty(ListNode* p_NewNode);
-	void insertToHead(ListNode* p_NewNode);
-	void insertToInner(ListNode* p_NewNode, ListNode* p_PrevNode);
-	void insertToTail(ListNode* p_NewNode);
-	void insert(ListNode* p_NewNode);
+	void insertToEmpty(ListNode* nodeToAdd);
+	void insertToHead(ListNode* nodeToAdd);
+	void insertToInner(ListNode* nodeToAdd, ListNode* p);
+	void insertToTail(ListNode* nodeToAdd);
+	void insert(Student* student);
 
-	//void deleteFromEmpty(int p_Id);
 	void deleteNode(Student* p_Student);
-	void deleteSingleNode();
 	void deleteFromHead();
 	void deleteFromTail();
-	void deleteFromInner(ListNode* p_NodeToDelete);
+	void deleteFromInner(ListNode* prev);
+	void deleteNode(ListNode* nodeToDelete);
 
 	bool isEmpty();
-	bool findNode(int p_Id, ListNode*& p_NodeToChange);
+	bool findNode(int p_Id, ListNode*& prevNode);
 
+	int getComparesCount();
+	void printList();
 };

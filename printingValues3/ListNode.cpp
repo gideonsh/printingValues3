@@ -12,7 +12,8 @@ ListNode::ListNode(Student* p_Student)
 
  ListNode* ListNode::makeListNode(Student* p_Student)
 {
-	 ListNode* Node = new ListNode(p_Student);
+	 ListNode* node = new ListNode(p_Student);
+	 return node;
 }
 
 void ListNode::deleteListNode(int p_Id)

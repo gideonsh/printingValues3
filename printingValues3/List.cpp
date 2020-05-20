@@ -1,10 +1,15 @@
-
 #include "List.h"
 
 List::List()
 {
 	m_Head = nullptr;
 	m_Tail = nullptr;
+	m_cmpCount = 0;
+}
+
+List::~List()
+{
+	this->makeEmptyList();
 }
 
 void List::makeEmptyList()
@@ -17,177 +22,177 @@ void List::makeEmptyList()
 		{
 			prev = current;
 			current = current->next;
-			delete prev->m_Student;
-			delete prev;
+			deleteNode(prev);
 		}
 	}
 	m_Head = nullptr;
 	m_Tail = nullptr;
 }
 
-void List::insertToEmpty(ListNode* p_NewNode)
+void List::insertToEmpty(ListNode* nodeToAdd)
 {
-	m_Head = p_NewNode;
-	m_Tail = p_NewNode;
+	m_Tail = nodeToAdd;
+	m_Head = nodeToAdd;
 }
 
-void List::insertToHead(ListNode* p_NewNode)
+void List::insertToHead(ListNode* nodeToAdd)
 {
-	p_NewNode->next = m_Head;
-	m_Head->prev = p_NewNode;
-	m_Head = p_NewNode;
+	nodeToAdd->next = m_Head;
+	m_Head->prev = nodeToAdd;
+	m_Head = nodeToAdd;
 }
 
-void List::insertToInner(ListNode* p_NewNode, ListNode* p_PrevNode)
+void List::insertToInner(ListNode* nodeToAdd, ListNode* p)
 {
-	p_NewNode->next = p_PrevNode->next;
-	p_NewNode->prev = p_PrevNode;
-	p_PrevNode->next->prev = p_NewNode;
-	p_PrevNode->next = p_NewNode;
+	nodeToAdd->prev = p;
+	nodeToAdd->next = p->next;
+	p->next = nodeToAdd;
+	nodeToAdd->next->prev = nodeToAdd;
 }
 
-void List::insertToTail(ListNode* p_NewNode)
+void List::insertToTail(ListNode* nodeToAdd)
 {
-	m_Tail->next = p_NewNode;
-	p_NewNode->prev = m_Tail;
-	m_Tail = p_NewNode;
+	nodeToAdd->prev = m_Tail;
+	m_Tail->next = nodeToAdd;
+	m_Tail = nodeToAdd;
 }
 
-void List::insert(ListNode* p_NewNode)
+void List::insert(Student* student)
 {
-	ListNode* current;
-	if (m_Head == m_Tail)
-	{
-		insertToEmpty(p_NewNode);
-		return;
-	}
-	bool existNode = findNode(p_NewNode->m_Student->getId, current);
-	if (!existNode)
-	{
-		if (current == m_Head)
-		{
-			m_Head->prev = p_NewNode;
-			p_NewNode->next = m_Head;
-			m_Head = p_NewNode;
-		}
-		else if (current == m_Tail)
-		{
-			m_Tail->next = p_NewNode;
-			p_NewNode->prev = m_Tail;
-			m_Tail = p_NewNode;
-		}
-		else
-		{
-			insertToInner(p_NewNode, current);
-		}
-	}
+	ListNode* prev;
+	ListNode* nodeToAdd = new ListNode(student);
+
+	if (this->isEmpty())
+		insertToEmpty(nodeToAdd);
+
 	else
 	{
-		cout << "student already exist\n";
-	}
-}
-
-void List::deleteSingleNode()
-{
-	ListNode* current = m_Head;
-	m_Head = nullptr;
-	m_Tail = nullptr;
-	delete current->m_Student;
-	delete current;
-}
-
-void List::deleteNode(Student* p_Student)
-{
-	ListNode* current;
-	bool existNode = findNode(p_Student->getId, current);
-	if (existNode)
-	{
-		if (current == m_Head && current->next == nullptr)
+		bool existNode = findNode(student->getId(), prev);
+		if (!existNode)
 		{
-			deleteSingleNode();
-		}
-		else if (current == m_Head)
-		{
-			deleteFromHead();
-		}
-		else if (current == m_Tail)
-		{
-			deleteFromTail();
+			if (prev == nullptr)
+				insertToHead(nodeToAdd);
+			else if (prev == m_Tail)
+				insertToTail(nodeToAdd);
+			else
+				insertToInner(nodeToAdd, prev);
 		}
 		else
 		{
-			deleteFromInner(current);
+			throw invalid_argument("Student already exists");
 		}
+	}
+}
+
+void List::deleteNode(Student* student)
+{
+	ListNode* prev;
+
+	if (this->isEmpty())
+		throw invalid_argument("The List is empty.");
+	else
+	{
+		bool existNode = findNode(student->getId(), prev);
+		if (existNode)
+		{
+			if (prev == nullptr)
+			{
+				deleteFromHead();
+			}
+			else if (prev->next == m_Tail)
+			{
+				deleteFromTail();
+			}
+			else
+			{
+				deleteFromInner(prev);
+			}
+		}
+		else
+			throw invalid_argument("Student does not exsit.");
 	}
 }
 
 void List::deleteFromHead()
 {
-	ListNode* current = m_Head;
 	m_Head = m_Head->next;
-	m_Head->prev = nullptr;
-	delete current->m_Student;
-	delete current;
+	if (m_Head == nullptr)
+	{
+		deleteNode(m_Tail);
+		m_Tail = nullptr;
+	}
+	else
+	{
+		deleteNode(m_Head->prev);
+		m_Head->prev = nullptr;
+	}
 }
 
 void List::deleteFromTail()
 {
-	ListNode* current = m_Tail;
+	if (m_Tail == m_Head)
+	{
+		deleteNode(m_Tail);
+		m_Tail = m_Head = nullptr;
+		return;
+	}
 	m_Tail = m_Tail->prev;
+	deleteNode(m_Tail->next);
 	m_Tail->next = nullptr;
-	delete current->m_Student;
-	delete current;
 }
 
-void List::deleteFromInner(ListNode* p_NodeToDelete)
+void List::deleteFromInner(ListNode* prev)
 {
-	ListNode* prev = p_NodeToDelete->prev;
-	prev->next = p_NodeToDelete->next;
-	p_NodeToDelete->next = prev;
-	delete p_NodeToDelete->m_Student;
-	delete p_NodeToDelete;
+	ListNode* nodeToDelete = prev->next;
+	prev->next = nodeToDelete->next;
+	nodeToDelete->next->prev = prev;
+	deleteNode(nodeToDelete);
 }
 
+void List::deleteNode(ListNode* nodeToDelete)
+{
+	delete nodeToDelete;
+}
 
 bool List::isEmpty()
 {
-	if (m_Head == nullptr && m_Tail == nullptr)
-		return true;
+	return (m_Head == nullptr && m_Tail == nullptr);
+}
+
+bool List::findNode(int p_Id, ListNode*& prevNode)
+{
+	ListNode* curr = m_Head;
+	ListNode* prev = nullptr;
+
+	while (curr != nullptr)
+	{
+		m_cmpCount++;
+		if (curr->m_Student->getId() >= p_Id)
+		{
+			prevNode = prev;
+			if(curr->m_Student->getId() == p_Id)
+				return true;
+			return false;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
+	prevNode = prev;
 	return false;
 }
 
-bool List::findNode(int p_Id, ListNode*& p_NodeToChange)
+int List::getComparesCount()
 {
-	ListNode* currentNode = m_Head;
+	return m_cmpCount;
+}
 
-	if (currentNode->m_Student->getId() > p_Id)
+void List::printList()
+{
+	ListNode* curr = m_Head;
+	while (curr != nullptr)
 	{
-		p_NodeToChange = currentNode;
-		return false;
+		curr->m_Student->printStudentInfo();
+		curr = curr->next;
 	}
-
-	while (currentNode->next != nullptr)
-	{
-		if (currentNode->m_Student->getId() == p_Id)
-		{
-			p_NodeToChange = currentNode;
-			return true;
-		}
-		if (currentNode->m_Student->getId() < p_Id && currentNode->next->m_Student->getId() > p_Id)
-		{
-			p_NodeToChange = currentNode;
-			return false;
-		}
-		currentNode = currentNode->next;
-	}
-	if (currentNode->m_Student->getId() == p_Id)
-	{
-		p_NodeToChange = currentNode;
-		return true;
-	}
-	else
-	{
-		p_NodeToChange = currentNode;
-		return false;
-	}
+	cout << endl;
 }
