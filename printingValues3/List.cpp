@@ -67,20 +67,13 @@ void List::insert(Student* student)
 
 	else
 	{
-		bool existNode = findNode(student->getId(), prev);
-		if (!existNode)
-		{
-			if (prev == nullptr)
-				insertToHead(nodeToAdd);
-			else if (prev == m_Tail)
-				insertToTail(nodeToAdd);
-			else
-				insertToInner(nodeToAdd, prev);
-		}
+		prev = findNode(student->getId());
+		if (prev == nullptr)
+			insertToHead(nodeToAdd);
+		else if (prev == m_Tail)
+			insertToTail(nodeToAdd);
 		else
-		{
-			throw invalid_argument("Student already exists");
-		}
+			insertToInner(nodeToAdd, prev);
 	}
 }
 
@@ -92,24 +85,13 @@ void List::deleteNode(Student* student)
 		throw invalid_argument("The List is empty.");
 	else
 	{
-		bool existNode = findNode(student->getId(), prev);
-		if (existNode)
-		{
-			if (prev == nullptr)
-			{
-				deleteFromHead();
-			}
-			else if (prev->next == m_Tail)
-			{
-				deleteFromTail();
-			}
-			else
-			{
-				deleteFromInner(prev);
-			}
-		}
+		prev = findNode(student->getId());
+		if (prev == nullptr)
+			deleteFromHead();
+		else if (prev->next == m_Tail)
+			deleteFromTail();
 		else
-			throw invalid_argument("Student does not exsit.");
+			deleteFromInner(prev);
 	}
 }
 
@@ -159,7 +141,7 @@ bool List::isEmpty()
 	return (m_Head == nullptr && m_Tail == nullptr);
 }
 
-bool List::findNode(int p_Id, ListNode*& prevNode)
+ListNode* List::findNode(int p_Id)
 {
 	ListNode* curr = m_Head;
 	ListNode* prev = nullptr;
@@ -169,16 +151,12 @@ bool List::findNode(int p_Id, ListNode*& prevNode)
 		m_cmpCount++;
 		if (curr->m_Student->getId() >= p_Id)
 		{
-			prevNode = prev;
-			if(curr->m_Student->getId() == p_Id)
-				return true;
-			return false;
+			break;
 		}
 		prev = curr;
 		curr = curr->next;
 	}
-	prevNode = prev;
-	return false;
+	return prev;
 }
 
 int List::getComparesCount()

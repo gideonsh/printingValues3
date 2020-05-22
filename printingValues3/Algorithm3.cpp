@@ -19,7 +19,7 @@ void Algorithm3::QuickSort(Student* arr, int left, int right)
 	}
 }
 
-int Algorithm3::Partition(Student* arr, int left, int right)
+int Algorithm3::Partition(Student* arr, int left, int right)	//The pointer moves 1 step towards the pivot each iteration.
 {
 	int pivotIndex = left;
 	int indexToCompare = right;
@@ -54,8 +54,10 @@ int Algorithm3::Partition(Student* arr, int left, int right)
 				indexToCompare++;
 			}
 		}
-		m_cmpCount++;
+		m_cmpCount++;	//In each iteration there is only one case to enter to and in each case only one comprasion.
 	}
+	m_cmpCount++;		//In the last iteration there will be two comprasions.
+
 	return pivotIndex;
 }
 

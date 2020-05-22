@@ -31,21 +31,6 @@ void Student::setName(string name)
 	}
 }
 
-void Student::setId(string id)
-{
-	try
-	{
-		if (isIdValid(id))
-		{
-			m_Id = stoi(id);
-		}
-	}
-	catch (exception ex)
-	{
-		throw ex;
-	}
-}
-
 string Student::getName()
 {
 	return m_Name;

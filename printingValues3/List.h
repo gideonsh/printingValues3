@@ -28,7 +28,7 @@ public:
 	void deleteNode(ListNode* nodeToDelete);
 
 	bool isEmpty();
-	bool findNode(int p_Id, ListNode*& prevNode);
+	ListNode* findNode(int p_Id);
 
 	int getComparesCount();
 	void printList();

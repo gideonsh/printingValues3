@@ -16,7 +16,6 @@ public:
 	Student(const Student& other);
 	Student(Student&& other);
 	void setName(string name);
-	void setId(string id);
 	string getName();
 	int getId();
 	void printStudentInfo();
@@ -48,7 +47,7 @@ public:
 		return true;
 	}
 	
-	static bool isIdValid(string id)
+	static bool isIdValid(Student students[], int n, string id)
 	{
 		if (id == "")
 			throw invalid_argument("ID is empty.");
@@ -58,6 +57,14 @@ public:
 			if (isdigit(id[i]) == false)
 				throw invalid_argument("ID includes not numeric characters.");
 		}
+
+		int studentId = stoi(id);
+		for (int i = 0; i < n; i++)
+		{
+			if (students[i].getId() == studentId)
+				throw invalid_argument("Student id already exsits.");
+		}
+
 		return true;
 	}
 
