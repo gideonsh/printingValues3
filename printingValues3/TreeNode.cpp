@@ -22,13 +22,19 @@ TreeNode::~TreeNode()
 		delete m_Right;
 }
 
-void TreeNode::Inorder()
+void TreeNode::Inorder(int k, bool& stop, int& cmpCount)
 {
-	if (m_Left != nullptr)
-		m_Left->Inorder();
+	if (stop == false)
+	{
+		if (m_Left != nullptr)
+			m_Left->Inorder(k, stop, cmpCount);
 
-	m_Data->printStudentInfo;
+		cmpCount++;
+		if (m_Data->getId() >= k)
+			return;
+		m_Data->printStudentInfo();
 
-	if (m_Right != nullptr)
-		m_Right->Inorder();
+		if (m_Right != nullptr)
+			m_Right->Inorder(k, stop, cmpCount);
+	}
 }

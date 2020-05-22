@@ -172,5 +172,4 @@ void List::printList()
 		curr->m_Student->printStudentInfo();
 		curr = curr->next;
 	}
-	cout << endl;
 }

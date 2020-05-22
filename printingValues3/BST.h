@@ -17,14 +17,17 @@ public:
 
 	void Delete(int studentIdToDelete);
 	TreeNode* Find_ToDelete(int key, TreeNode*& prev);
-	void DeleteNodeWithOneChild(TreeNode* nodeChild, TreeNode* prev, eSide side);
+	void DeleteNodeWithNoChildren(TreeNode* nodeToDelete, TreeNode* prev, eSide side);
+	void DeleteNodeWithOneChild(TreeNode* nodeToDelete, TreeNode* prev, eSide side);
+	void DeleteNodeWithTwoChildren(TreeNode* nodeToDelete, TreeNode* prev, eSide side);
 	bool isOnlyOneChild(TreeNode* nodeToDelete);
 	TreeNode* findMaxRightChild(TreeNode* nodeToDeleteLeftChild, TreeNode*& prev);
 
 	void MakeEmpty();
 	bool IsEmpty();
 	TreeNode* Find(int key);
-	void PrintInorder();
+	void PrintInorderTillK(int k);
+	int getComparesCount();
 
 	static eSide whichSide(TreeNode* prev, TreeNode* node)
 	{

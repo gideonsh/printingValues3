@@ -17,13 +17,22 @@ public:
 	TreeNode(const TreeNode& other) = delete;
 	~TreeNode();
 
-	void Inorder();
+	void Inorder(int k, bool& stop, int& cmpCount);
+	const TreeNode& operator=(const TreeNode& other)
+	{
+		if (this != &other)
+		{
+			m_Data = other.m_Data;
+			m_Key = other.m_Key;
+		}
+		return *this;
+	}
 	static void swap(TreeNode* a, TreeNode* b)
 	{
-		TreeNode* temp;
-		*temp = *a;
-		a = b;
-		b = temp;
+		TreeNode temp;
+		temp = *a;
+		*a = *b;
+		*b = temp;
 	}
 
 	friend class BST;

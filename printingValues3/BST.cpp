@@ -1,117 +1,4 @@
 #include "BST.h"
-//
-//
-//#include "BST.h"
-//
-//
-//
-//void BST::insertNode(TreeNode* p_NewNode)
-//{
-//	TreeNode* currentNode;
-//	if (m_Head == nullptr)
-//	{
-//		m_Head = p_NewNode;
-//	}
-//	else
-//	{
-//		if (findeNode(p_NewNode->m_Data.getId(), currentNode))
-//		{
-//			cout << "Node Id already exist!\n";
-//		}
-//		else
-//		{
-//			if (currentNode != nullptr)
-//			{
-//				if (currentNode->m_Data.getId() > p_NewNode->m_Data.getId())
-//				{
-//					currentNode->m_Left = p_NewNode;
-//				}
-//				else
-//				{
-//					currentNode->m_Right = p_NewNode;
-//				}
-//			}
-//		}
-//	}
-//}
-//
-//
-//
-//void BST::deleteNode(int p_Id)
-//{
-//
-//}
-//
-//bool BST::findeNode(int p_Id, TreeNode*& p_NodeToChange)
-//{
-//	if (m_Head != nullptr)
-//	{
-//		p_NodeToChange = findeNodeReq(p_Id, m_Head);
-//		if (p_NodeToChange->m_Data.getId() == p_Id)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-//	else
-//	{
-//		p_NodeToChange = nullptr;
-//		return false;
-//	}
-//}
-//
-//TreeNode* BST::findeNodeReq(int p_Id, TreeNode* p_Node)
-//{
-//	if (p_Node->m_Data.getId() == p_Id)
-//	{
-//		return p_Node;
-//	}
-//	else
-//	{
-//		if (p_Node->m_Data.getId() > p_Id)
-//		{
-//			if (p_Node->m_Left != nullptr)
-//			{
-//				return findeNodeReq(p_Id, p_Node->m_Left);
-//			}
-//			else
-//			{
-//				return p_Node;
-//			}
-//			
-//		}
-//		else
-//		{
-//			if (p_Node->m_Right != nullptr)
-//			{
-//				return findeNodeReq(p_Id, p_Node->m_Right);
-//			}
-//			else
-//			{
-//				return p_Node;
-//			}
-//		}
-//	}
-//}
-//
-//void BST::makeEmpty()
-//{
-//	m_Head = nullptr;
-//}
-//
-//bool BST::isEmpty(TreeNode* p_Head)
-//{
-//	if (m_Head == nullptr)
-//	{
-//		return true;
-//	}
-//	return false;
-//}
-//
-//
 
 BST::BST()
 {
@@ -144,7 +31,7 @@ void BST::Insert(Student* studentToAdd)		//Inserts a node to the tree with Stude
 	}
 
 	newNode = new TreeNode(studentToAdd, nullptr, nullptr);
-	if (parent = nullptr)
+	if (parent == nullptr)
 		m_Root = newNode;
 	else
 	{
@@ -169,22 +56,14 @@ void BST::Delete(int studentIdToDelete)		//Deletes requested node with the input
 	}
 	else
 	{
-		if (isOnlyOneChild(nodeToDelete) == true)
-		{
-			if (nodeToDelete->m_Left == nullptr)	//Sends right child for connections.
-				DeleteNodeWithOneChild(nodeToDelete->m_Right, prev, side);
+		if (nodeToDelete->m_Left == nullptr && nodeToDelete->m_Right == nullptr)  //Case the node we want to delete has no children.
+			DeleteNodeWithNoChildren(nodeToDelete, prev, side);
 
-			else									//Sends left child for connections.
-				DeleteNodeWithOneChild(nodeToDelete->m_Left, prev, side);
-		}
-		else
-		{
-			//Case the node we want to delete has two children.
-			TreeNode* MaxRightInLeftSubTree = findMaxRightChild(nodeToDelete->m_Left, prev);//Find max right child.
-			TreeNode::swap(MaxRightInLeftSubTree, nodeToDelete);							//Swap v and r.
-			side = whichSide(prev, MaxRightInLeftSubTree);									//Find side.
-			DeleteNodeWithOneChild(MaxRightInLeftSubTree->m_Left, prev, side);				//Delete r node.
-		}
+		else if (isOnlyOneChild(nodeToDelete) == true)	//Case the node we want to delete has one child.
+			DeleteNodeWithOneChild(nodeToDelete, prev, side);
+
+		else	//Case the node we want to delete has two children.
+			DeleteNodeWithTwoChildren(nodeToDelete, prev, side);
 	}
 }
 
@@ -214,20 +93,58 @@ TreeNode* BST::Find_ToDelete(int key, TreeNode*& prev)	//Returns the node to del
 	return nullptr;
 }
 
-void BST::DeleteNodeWithOneChild(TreeNode* nodeChild, TreeNode* prev, eSide side)	//Deletes a node with single child.
+void BST::DeleteNodeWithNoChildren(TreeNode* nodeToDelete, TreeNode* prev, eSide side)	//Deletes node with no children.
 {
+	switch (side)
+	{
+	case Right:
+		prev->m_Right = nullptr;
+		break;
+	case Left:
+		prev->m_Left = nullptr;
+		break;
+	}
+	delete nodeToDelete;
+}
+
+void BST::DeleteNodeWithOneChild(TreeNode* nodeToDelete, TreeNode* prev, eSide side) //Deletes a node with single child.
+{
+	TreeNode* nodeChild;
+	if (nodeToDelete->m_Left == nullptr)
+	{
+		nodeChild = nodeToDelete->m_Right;
+		nodeToDelete->m_Right = nullptr;
+	}
+	else
+	{
+		nodeChild = nodeToDelete->m_Left;
+		nodeToDelete->m_Left = nullptr;
+	}
+
 	switch (side)
 	{
 	case Left:
 		prev->m_Left = nodeChild;
-		delete prev->m_Left;
 		break;
 
 	case Right:
 		prev->m_Right = nodeChild;
-		delete prev->m_Right;
 		break;
 	}
+
+	delete nodeToDelete;
+}
+
+void BST::DeleteNodeWithTwoChildren(TreeNode* nodeToDelete, TreeNode* prev, eSide side)	//Deletes node with two children.
+{
+	TreeNode* MaxRightInLeftSubTree = findMaxRightChild(nodeToDelete, prev);//Find max right child.
+	TreeNode::swap(MaxRightInLeftSubTree, nodeToDelete);					//Swap v and r.
+	side = whichSide(prev, MaxRightInLeftSubTree);							//Find side.
+
+	if (MaxRightInLeftSubTree->m_Left == nullptr && MaxRightInLeftSubTree->m_Right == nullptr)
+		DeleteNodeWithNoChildren(MaxRightInLeftSubTree, prev, side);	//Case r node has no children.
+	else
+		DeleteNodeWithOneChild(MaxRightInLeftSubTree, prev, side);		//Case r node has one child.
 }
 
 bool BST::isOnlyOneChild(TreeNode* nodeToDelete)	//Checks if the requested node to delete has single child.
@@ -240,7 +157,7 @@ bool BST::isOnlyOneChild(TreeNode* nodeToDelete)	//Checks if the requested node 
 
 TreeNode* BST::findMaxRightChild(TreeNode* nodeToDelete, TreeNode*& prev)	//Returns biggest right child in left sub-tree.
 {
-	TreeNode* p;
+	TreeNode* p = nullptr;
 	TreeNode* current = nodeToDelete->m_Left;
 	if (current->m_Right == nullptr)
 		prev = nodeToDelete;
@@ -285,8 +202,14 @@ TreeNode* BST::Find(int key)	//Finds the requested treenode with the requested k
 	return nullptr;
 }
 
-void BST::PrintInorder()	//Prints the tree inorder.
+void BST::PrintInorderTillK(int k)	//Prints the tree inorder till gets to k.
 {
+	bool stop = false;
 	if (m_Root != nullptr)
-		m_Root->Inorder();
+		m_Root->Inorder(k, stop, m_cmpCount);
+}
+
+int BST::getComparesCount()
+{
+	return m_cmpCount;
 }
