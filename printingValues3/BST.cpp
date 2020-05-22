@@ -125,9 +125,9 @@ BST::~BST()
 	m_Root = nullptr;
 }
 
-void BST::Insert(Student* studentToAdd)
-//We do not check if the id of the student we want to add exists in our tree already
-//because we have checked it when we got the students array in the main program.
+void BST::Insert(Student* studentToAdd)		//Inserts a node to the tree with Student object.
+//-We do not check if the id of the student we want to add exists in our tree already-
+//-because we have checked it when we got the students array in the main program.-----
 {
 	TreeNode* temp = m_Root;
 	TreeNode* parent = nullptr;
@@ -156,7 +156,7 @@ void BST::Insert(Student* studentToAdd)
 	}
 }
 
-void BST::Delete(int studentIdToDelete)
+void BST::Delete(int studentIdToDelete)		//Deletes requested node with the inputted student id to delete.
 {
 	TreeNode* prev;
 	TreeNode* nodeToDelete = Find_ToDelete(studentIdToDelete, prev);
@@ -188,36 +188,7 @@ void BST::Delete(int studentIdToDelete)
 	}
 }
 
-void BST::MakeEmpty()
-{
-	if (m_Root != nullptr)
-		delete m_Root;
-	m_Root = nullptr;
-}
-
-bool BST::IsEmpty()
-{
-	return (m_Root == nullptr);
-}
-
-TreeNode* BST::Find(int key)
-{
-	TreeNode* current = m_Root;
-	while (current != nullptr)
-	{
-		m_cmpCount++;
-		if (key == current->m_Key)
-			return current;
-		else if (key < current->m_Key)
-			current = current->m_Left;
-		else
-			current = current->m_Right;
-		m_cmpCount++;
-	}
-	return nullptr;
-}
-
-TreeNode* BST::Find_ToDelete(int key, TreeNode*& prev)
+TreeNode* BST::Find_ToDelete(int key, TreeNode*& prev)	//Returns the node to delete and by-ref the parent of this node.
 {
 	TreeNode* current = m_Root;
 	TreeNode* p = nullptr;
@@ -243,23 +214,23 @@ TreeNode* BST::Find_ToDelete(int key, TreeNode*& prev)
 	return nullptr;
 }
 
-void BST::DeleteNodeWithOneChild(TreeNode* nodeChild, TreeNode* prev, eSide side)
+void BST::DeleteNodeWithOneChild(TreeNode* nodeChild, TreeNode* prev, eSide side)	//Deletes a node with single child.
 {
-	switch(side)
+	switch (side)
 	{
-		case Left:
-			prev->m_Left = nodeChild;
-			delete prev->m_Left;
-			break;
+	case Left:
+		prev->m_Left = nodeChild;
+		delete prev->m_Left;
+		break;
 
-		case Right:
-			prev->m_Right = nodeChild;
-			delete prev->m_Right;
-			break;
+	case Right:
+		prev->m_Right = nodeChild;
+		delete prev->m_Right;
+		break;
 	}
 }
 
-bool BST::isOnlyOneChild(TreeNode* nodeToDelete)
+bool BST::isOnlyOneChild(TreeNode* nodeToDelete)	//Checks if the requested node to delete has single child.
 {
 	if ((nodeToDelete->m_Left == nullptr && nodeToDelete->m_Right != nullptr) ||
 		(nodeToDelete->m_Left != nullptr && nodeToDelete->m_Right == nullptr))
@@ -267,7 +238,7 @@ bool BST::isOnlyOneChild(TreeNode* nodeToDelete)
 	return false;
 }
 
-TreeNode* BST::findMaxRightChild(TreeNode* nodeToDelete, TreeNode*& prev)
+TreeNode* BST::findMaxRightChild(TreeNode* nodeToDelete, TreeNode*& prev)	//Returns biggest right child in left sub-tree.
 {
 	TreeNode* p;
 	TreeNode* current = nodeToDelete->m_Left;
@@ -285,7 +256,36 @@ TreeNode* BST::findMaxRightChild(TreeNode* nodeToDelete, TreeNode*& prev)
 	return current;
 }
 
-void BST::PrintInorder()
+void BST::MakeEmpty()	//Makes an empty tree.
+{
+	if (m_Root != nullptr)
+		delete m_Root;
+	m_Root = nullptr;
+}
+
+bool BST::IsEmpty()		//Checks if the tree is empty.
+{
+	return (m_Root == nullptr);
+}
+
+TreeNode* BST::Find(int key)	//Finds the requested treenode with the requested key if exsits.
+{
+	TreeNode* current = m_Root;
+	while (current != nullptr)
+	{
+		m_cmpCount++;
+		if (key == current->m_Key)
+			return current;
+		else if (key < current->m_Key)
+			current = current->m_Left;
+		else
+			current = current->m_Right;
+		m_cmpCount++;
+	}
+	return nullptr;
+}
+
+void BST::PrintInorder()	//Prints the tree inorder.
 {
 	if (m_Root != nullptr)
 		m_Root->Inorder();

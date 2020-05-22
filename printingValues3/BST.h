@@ -14,14 +14,17 @@ public:
 	BST();
 	~BST();
 	void Insert(Student* studentToAdd);
+
 	void Delete(int studentIdToDelete);
-	void MakeEmpty();
-	bool IsEmpty();
-	TreeNode* Find(int key);
 	TreeNode* Find_ToDelete(int key, TreeNode*& prev);
 	void DeleteNodeWithOneChild(TreeNode* nodeChild, TreeNode* prev, eSide side);
 	bool isOnlyOneChild(TreeNode* nodeToDelete);
 	TreeNode* findMaxRightChild(TreeNode* nodeToDeleteLeftChild, TreeNode*& prev);
+
+	void MakeEmpty();
+	bool IsEmpty();
+	TreeNode* Find(int key);
+	void PrintInorder();
 
 	static eSide whichSide(TreeNode* prev, TreeNode* node)
 	{
@@ -29,8 +32,6 @@ public:
 			return Right;
 		return Left;
 	}
-
-	void PrintInorder();
 };
 
 
