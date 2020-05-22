@@ -87,7 +87,7 @@ TreeNode* BST::Find_ToDelete(int key, TreeNode*& prev)	//Returns the node to del
 				current = current->m_Left;
 			else
 				current = current->m_Right;
-			m_cmpCount++;
+			m_cmpCount++; // if current is a leaf then we do m_cmpCount++ with no necessery check
 		}
 	}
 	return nullptr;
@@ -197,7 +197,7 @@ TreeNode* BST::Find(int key)	//Finds the requested treenode with the requested k
 			current = current->m_Left;
 		else
 			current = current->m_Right;
-		m_cmpCount++;
+		m_cmpCount++; // if current is a leaf then we do m_cmpCount++ with no necessery check
 	}
 	return nullptr;
 }
