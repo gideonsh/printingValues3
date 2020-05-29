@@ -82,7 +82,7 @@ void List::deleteNode(Student* student)
 	ListNode* prev;
 
 	if (this->isEmpty())
-		throw invalid_argument("The List is empty.");
+		throw new invalid_argument("The List is empty.");
 	else
 	{
 		prev = findNode(student->getId());

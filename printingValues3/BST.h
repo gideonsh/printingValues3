@@ -3,6 +3,10 @@
 #include<iostream>
 using namespace std;
 #include "TreeNode.h"
+#include <stdexcept>
+
+#define Left 1
+#define Right 2
 
 class BST
 {
@@ -10,16 +14,15 @@ private:
 	TreeNode* m_Root;
 	int m_cmpCount;
 public:
-	static enum eSide { Left, Right };
 	BST();
 	~BST();
 	void Insert(Student* studentToAdd);
 
 	void Delete(int studentIdToDelete);
 	TreeNode* Find_ToDelete(int key, TreeNode*& prev);
-	void DeleteNodeWithNoChildren(TreeNode* nodeToDelete, TreeNode* prev, eSide side);
-	void DeleteNodeWithOneChild(TreeNode* nodeToDelete, TreeNode* prev, eSide side);
-	void DeleteNodeWithTwoChildren(TreeNode* nodeToDelete, TreeNode* prev, eSide side);
+	void DeleteNodeWithNoChildren(TreeNode* nodeToDelete, TreeNode* prev, int side);
+	void DeleteNodeWithOneChild(TreeNode* nodeToDelete, TreeNode* prev, int side);
+	void DeleteNodeWithTwoChildren(TreeNode* nodeToDelete, TreeNode* prev, int side);
 	bool isOnlyOneChild(TreeNode* nodeToDelete);
 	TreeNode* findMaxRightChild(TreeNode* nodeToDeleteLeftChild, TreeNode*& prev);
 
@@ -29,7 +32,7 @@ public:
 	void PrintInorderTillK(int k);
 	int getComparesCount();
 
-	static eSide whichSide(TreeNode* prev, TreeNode* node)
+	static int whichSide(TreeNode* prev, TreeNode* node)
 	{
 		if (prev->m_Right == node)
 			return Right;

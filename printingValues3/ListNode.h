@@ -18,5 +18,4 @@ public:
 	ListNode(Student* p_Student);
 	ListNode* makeListNode(Student* p_Student);
 	void deleteListNode(int p_Id);
-
 };
