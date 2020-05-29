@@ -27,7 +27,6 @@ int main()
 
 int NaivePrint(Student arr[], int n, int k)
 {
-	cout << "\nIn NaivePrint Function:" << endl;
 	int amount = 0;
 	List list;
 	ListNode* node;
@@ -44,7 +43,6 @@ int NaivePrint(Student arr[], int n, int k)
 
 int BSTPrint(Student arr[], int n, int k)
 {
-	cout << "\nIn BSTPrint Function:" << endl;
 	BST BinarySearchTree;
 	for (int i = 0; i < n; i++)
 		BinarySearchTree.Insert(arr + i);
@@ -54,7 +52,6 @@ int BSTPrint(Student arr[], int n, int k)
 
 int PrintBySort(Student arr[], int n, int k)
 {
-	cout << "\nIn PrintBySort Function:" << endl;
 	int amount;
 	Algorithm3 algo3(arr, n, k);
 	amount = algo3.getComparesCount();
